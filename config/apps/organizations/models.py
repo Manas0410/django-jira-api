@@ -1,4 +1,5 @@
 from django.db import models
+from django.conf import settings
 
 # Create your models here.
 class Organization(models.Model):
@@ -7,7 +8,7 @@ class Organization(models.Model):
     name = models.CharField(max_length=150)
     logo_url = models.URLField(max_length=500, null=True, blank=True)
     created_by = models.ForeignKey(
-        'users.User', on_delete=models.SET_NULL, null=True, related_name='created_organizations'
+        settings.AUTH_USER_MODEL, on_delete=models.SET_NULL, null=True, related_name='created_organizations'
     )
     is_active = models.BooleanField(default=True)
     created_at = models.DateTimeField(auto_now_add=True)
@@ -23,11 +24,11 @@ class OrgMembership(models.Model):
         Organization, on_delete=models.CASCADE, related_name='memberships'
     )
     user = models.ForeignKey(
-        'users.User', on_delete=models.CASCADE, related_name='org_memberships'
+        settings.AUTH_USER_MODEL, on_delete=models.CASCADE, related_name='org_memberships'
     )
     role = models.CharField(max_length=20, default='member')
     invited_by = models.ForeignKey(
-        'users.User', on_delete=models.SET_NULL, null=True, blank=True, related_name='sent_invites'
+        settings.AUTH_USER_MODEL, on_delete=models.SET_NULL, null=True, blank=True, related_name='sent_invites'
     )
     joined_at = models.DateTimeField(null=True, blank=True)
     created_at = models.DateTimeField(auto_now_add=True)
@@ -42,7 +43,7 @@ class OrgMembership(models.Model):
 class ActivityLog(models.Model):
     id = models.AutoField(primary_key=True)
     actor = models.ForeignKey(
-        'users.User', on_delete=models.SET_NULL, null=True, related_name='activity_logs'
+        settings.AUTH_USER_MODEL, on_delete=models.SET_NULL, null=True, related_name='activity_logs'
     )
     entity_type = models.CharField(max_length=50, db_index=True)
     entity_id = models.IntegerField(db_index=True)

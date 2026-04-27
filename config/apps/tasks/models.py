@@ -1,4 +1,5 @@
 from django.db import models
+from django.conf import settings
 
 # Create your models here.
 class Task(models.Model):
@@ -7,10 +8,10 @@ class Task(models.Model):
         'projects.Project', on_delete=models.CASCADE, related_name='tasks'
     )
     created_by = models.ForeignKey(
-        'users.User', on_delete=models.SET_NULL, null=True, related_name='created_tasks'
+        settings.AUTH_USER_MODEL, on_delete=models.SET_NULL, null=True, related_name='created_tasks'
     )
     assignee = models.ForeignKey(
-        'users.User', on_delete=models.SET_NULL, null=True, blank=True, related_name='assigned_tasks'
+        settings.AUTH_USER_MODEL, on_delete=models.SET_NULL, null=True, blank=True, related_name='assigned_tasks'
     )
     parent_task = models.ForeignKey(
         'self', on_delete=models.SET_NULL, null=True, blank=True, related_name='subtasks'
@@ -35,7 +36,7 @@ class Comment(models.Model):
         Task, on_delete=models.CASCADE, related_name='comments'
     )
     author = models.ForeignKey(
-        'users.User', on_delete=models.SET_NULL, null=True, related_name='comments'
+        settings.AUTH_USER_MODEL, on_delete=models.SET_NULL, null=True, related_name='comments'
     )
     parent_comment = models.ForeignKey(
         'self', on_delete=models.SET_NULL, null=True, blank=True, related_name='replies'
