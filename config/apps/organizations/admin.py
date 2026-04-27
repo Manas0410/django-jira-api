@@ -1,3 +1,6 @@
 from django.contrib import admin
+from .models import Organization, OrgMembership, ActivityLog
 
-# Register your models here.
+admin.site.register(Organization)
+admin.site.register(OrgMembership)
+admin.site.register(ActivityLog)
