@@ -96,6 +96,20 @@ DATABASES = {
     }
 }
 
+# CREATE DATABASE jira_db;
+
+# CREATE USER jira_user WITH PASSWORD 'strongpassword';
+
+# ALTER ROLE jira_user SET client_encoding TO 'utf8';
+# ALTER ROLE jira_user SET default_transaction_isolation TO 'read committed';
+# ALTER ROLE jira_user SET timezone TO 'UTC';
+
+# GRANT ALL PRIVILEGES ON DATABASE jira_db TO jira_user;
+
+# \c jira_db
+
+# GRANT ALL ON SCHEMA public TO jira_user;
+
 
 # Password validation
 # https://docs.djangoproject.com/en/5.2/ref/settings/#auth-password-validators

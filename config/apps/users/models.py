@@ -9,8 +9,8 @@ class UserProfile(models.Model):
     avatar_url = models.URLField(null=True, blank=True)
     is_verified = models.BooleanField(default=False)
 
-    def __str__(self):
-        return self.user.email
+    # def __str__(self):
+    #     return self.user.email
 
 
 @receiver(post_save,sender=settings.AUTH_USER_MODEL)
