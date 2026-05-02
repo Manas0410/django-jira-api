@@ -3,6 +3,8 @@ from rest_framework.response import Response
 from rest_framework import status
 from rest_framework_simplejwt.views import TokenObtainPairView
 from .serializers import RegisterSerializer,CustomTokenSerializer
+from rest_framework.permissions import IsAuthenticated
+from rest_framework_simplejwt.tokens import RefreshToken
 
 class RegisterView(APIView):
     def post(self, request):
@@ -17,3 +19,17 @@ class RegisterView(APIView):
 
 class CustomLoginView(TokenObtainPairView):
     serializer_class = CustomTokenSerializer
+
+
+class LogoutView(APIView):
+    permission_classes = [IsAuthenticated]
+
+    def post(self, request):
+        try:
+            refresh_token = request.data["refresh"]
+            token = RefreshToken(refresh_token)
+            token.blacklist()
+
+            return Response({"message": "Logged out successfully"}, status=200)
+        except Exception as e:
+            return Response({"error": "Invalid token"}, status=400)
