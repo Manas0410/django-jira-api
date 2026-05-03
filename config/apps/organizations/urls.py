@@ -1,5 +1,5 @@
 from django.urls import path
-from .views import OrganizationCreateView, OrganizationListView
+from .views import OrganizationCreateView, OrganizationListView, OrganizationDetailView
 
 urlpatterns = [
     path("create-org/", OrganizationCreateView.as_view()),  # POST
